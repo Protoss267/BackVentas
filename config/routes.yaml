@@ -1,3 +1,23 @@
-#index:
-#    path: /
-#    controller: App\Controller\DefaultController::index
+# config/routes.yaml
+api_login_check:
+  path: /api/login
+
+api_user_create:
+  path: /api/admin/userCreate
+  controller: App\Controller\Usuarios\CrearUsuarioController
+  methods: [ POST ]
+
+api_user_list:
+  path: /api/admin/userList
+  controller: App\Controller\Usuarios\ListarUsuariosController
+  methods: GET
+
+api_user_edit:
+  path: /api/admin/userUpdate/{id}
+  controller: App\Controller\Usuarios\ActualizarUsuarioController
+  methods: [ PUT ]
+
+api_user_delete:
+  path: /api/admin/userDelete/{id}
+  controller: App\Controller\Usuarios\EliminarUsuarioController
+  methods: [ DELETE ]
