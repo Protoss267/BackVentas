@@ -18,4 +18,22 @@ class ProductoRepository extends BaseRepository
     {
         $this->saveEntity($producto);
     }
+
+    public function findAllProduct():array
+    {
+        return $this->objectRepository->findAll();
+    }
+
+    public function findById(string $id):?object
+    {
+        return $this->objectRepository->find($id);
+    }
+
+    public function delete(Producto $producto)
+    {
+        $em=$this->getEntityManager();
+
+        $em->remove($producto);
+        $em->flush();
+    }
 }

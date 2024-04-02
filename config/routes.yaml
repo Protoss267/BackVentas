@@ -2,6 +2,8 @@
 api_login_check:
   path: /api/login
 
+
+#Usuarios
 api_user_create:
   path: /api/admin/userCreate
   controller: App\Controller\Usuarios\CrearUsuarioController
@@ -21,3 +23,25 @@ api_user_delete:
   path: /api/admin/userDelete/{id}
   controller: App\Controller\Usuarios\EliminarUsuarioController
   methods: [ DELETE ]
+
+#Productos
+api_producto_create:
+  path: /api/producto/create
+  controller: App\Controller\Producto\CrearProductoController
+  methods: [ POST ]
+
+api_producto_list:
+    path: /api/producto/list
+    controller: App\Controller\Producto\ListarProductoController
+    methods: [ GET ]
+
+api_producto_edit:
+  path: /api/producto/edit/{id}
+  controller: App\Controller\Producto\ActualizarProductoController
+  methods: [ PUT ]
+
+api_producto_delete:
+    path: /api/producto/delete/{id}
+    controller: App\Controller\Producto\EliminarProductoController
+    methods: [ DELETE ]
+
