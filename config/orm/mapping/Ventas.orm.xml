@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping">
+    <entity name="App\Entity\Ventas" table="ventas">
+        <id name="id" length="36" type="string"/>
+
+        <field name="fecha_Creada" type="datetime"/>
+        <field name="tranferencia" type="boolean"/>
+        <field name="importeTotal" type="float"/>
+
+        <indexes>
+            <index columns="fecha_Creada" name="IDX_fecha"/>
+        </indexes>
+
+        <lifecycle-callbacks>
+            <lifecycle-callback type="preUpdate" method="markAsUpdated"/>
+        </lifecycle-callbacks>
+
+        <one-to-many field="productos" target-entity="App\Entity\Producto" mapped-by="products"/>
+    </entity>
+</doctrine-mapping>
