@@ -21,7 +21,7 @@ class ListarProductoServices
         foreach ($products as $item)
         {
             $data[]=[
-                'producto'=>[
+
                 'id'=>$item->getId(),
                 'codigo'=>$item->getCodigo(),
                 'nombre'=>$item->getNombre(),
@@ -30,7 +30,7 @@ class ListarProductoServices
                 'updated'=>$item->getActualizado()->format(\DateTime::RFC822),
                 'coste'=>$item->getPrecioI(),
                 'precio'=>$item->getPrecioF(),
-        ]
+
             ];
         }
 

@@ -7,6 +7,7 @@ namespace App\Repository;
 use App\Entity\Users;
 use Doctrine\ORM\Exception\ORMException;
 use Doctrine\ORM\OptimisticLockException;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
 
 class UserRepository extends BaseRepository
@@ -23,16 +24,18 @@ class UserRepository extends BaseRepository
      * @param string $usuario
      * @return Users|object
      */
-    public function findByUserOrFail(string $usuario)
+    public function findByUserOrFail(string $usuario):Users
     {
-        if(null === $user=$this->objectRepository->findOneBy(['nickname'=>$usuario]))
-        {
-            throw new UnsupportedUserException(sprintf('Usuario: %s no encontrado',$usuario));
+        if(null === $user=$this->objectRepository->findOneBy(['nickname'=>$usuario])) {
+            throw new NotFoundHttpException(sprintf('Usuario: %s no encontrado', $usuario));
         }
-        else
             return $user;
     }
 
+    /**
+     * @param string $id
+     * @return Users|object
+     */
     public function findOneById(string $id): object
     {
         $object=$this->objectRepository->find($id);

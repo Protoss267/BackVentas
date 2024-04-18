@@ -24,6 +24,11 @@ api_user_delete:
   controller: App\Controller\Usuarios\EliminarUsuarioController
   methods: [ DELETE ]
 
+api_user_get:
+  path: /api/admin/get/{id}
+  controller: App\Controller\Usuarios\GetUsuarioController
+  methods: [ GET ]
+
 #Productos
 api_producto_create:
   path: /api/producto/create
@@ -44,4 +49,13 @@ api_producto_delete:
     path: /api/producto/delete/{id}
     controller: App\Controller\Producto\EliminarProductoController
     methods: [ DELETE ]
+#Ventas
+api.ventas:
+  path: /api/venta
+  controller: App\Controller\Ventas\VentasController
+  methods: [ POST ]
 
+api.ventas.eliminar:
+  path: /api/venta/eliminar/{id}
+  controller: App\Controller\Ventas\EliminarVentasController
+  methods: [ DELETE ]

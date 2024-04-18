@@ -3,18 +3,15 @@
     <entity name="App\Entity\Ventas" table="ventas">
         <id name="id" length="36" type="string"/>
 
-        <field name="fecha_Creada" type="datetime"/>
-        <field name="tranferencia" type="boolean"/>
-        <field name="importeTotal" type="float"/>
 
-        <indexes>
-            <index columns="fecha_Creada" name="IDX_fecha"/>
-        </indexes>
+        <field name="fecha_venta" column="fecha_venta" type="datetime"/>
+        <field name="total" column="total" type="decimal" scale="2" precision="10"/>
+        <field name="transferencia" column="transferencia" type="boolean"/>
 
-        <lifecycle-callbacks>
-            <lifecycle-callback type="preUpdate" method="markAsUpdated"/>
-        </lifecycle-callbacks>
-
-        <one-to-many field="productos" target-entity="App\Entity\Producto" mapped-by="products"/>
+        <one-to-many field="items" target-entity="App\Entity\Item" mapped-by="items">
+            <cascade>
+                <cascade-all/>
+            </cascade>
+        </one-to-many>
     </entity>
 </doctrine-mapping>

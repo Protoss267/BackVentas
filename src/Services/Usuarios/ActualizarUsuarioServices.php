@@ -14,15 +14,19 @@ class ActualizarUsuarioServices
     {
     }
 
-    public function __invoke(string $id,string $usuario,string $password,string $name):Users
+    public function __invoke(string $id,string $usuario,string $password,string $name,bool $isAdmin):Users
     {
         $user=$this->userRepository->findOneById($id);
         if($user)
         {
+            if($password!='')
+            {
+                $encodedPassword = $this->encodePassword($this->encoder,$user,$password);
+                $user->setPassword($encodedPassword);
+            }
             $user->setNickname($usuario);
-            $encodedPassword = $this->encodePassword($this->encoder,$user,$user->getPassword());
-            $user->setPassword($encodedPassword);
             $user->setName($name);
+            $user->setIsAdmin($isAdmin);
             $this->userRepository->save($user);
 
         }else

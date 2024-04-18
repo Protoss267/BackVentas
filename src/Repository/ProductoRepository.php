@@ -36,4 +36,13 @@ class ProductoRepository extends BaseRepository
         $em->remove($producto);
         $em->flush();
     }
+
+    /**
+     * @param string $codigo
+     * @return Producto
+     */
+    public function findByCodigo(string $codigo)
+    {
+        return $this->objectRepository->findOneBy(['codigo'=>$codigo]);
+    }
 }

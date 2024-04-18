@@ -5,93 +5,65 @@ namespace App\Entity;
 
 
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Symfony\Component\Uid\Uuid;
 
 class Ventas
 {
-    private string $id;
-    private \DateTime $fecha_Creada;
-    private bool $tranferencia;
-    private Collection $productos;
-    private float $importeTotal;
-    private \DateTime $updated;
+    private $id;
+    private Collection $items;
+    private $fecha_venta;
+    private $transferencia;
+    private $total;
 
-       /**
-     * Ventas constructor.
-     * @param \DateTime $fecha_Creada
-     * @param bool $tranferencia
-     * @param Collection $productos
-     * @param float $importeTotal
-     */
-    public function __construct(\DateTime $fecha_Creada, bool $tranferencia, Collection $productos, float $importeTotal)
+
+    public function __construct($transferencia)
     {
         $this->id=Uuid::v4()->toRfc4122();
-        $this->fecha_Creada = new \DateTime('now');
-        $this->tranferencia = $tranferencia;
-        $this->productos = $productos;
-        $this->importeTotal = $importeTotal;
-        $this->markAsUpdated();
+        $this->fecha_venta=new \DateTime('now');
+        $this->transferencia = $transferencia;
+        $this->items= new ArrayCollection();
     }
 
+    public function getItems(): ArrayCollection|Collection
+    {
+        return $this->items;
+    }
 
-    public function getId(): string
+    public function setItems(ArrayCollection|Collection $items): void
+    {
+        $this->items = $items;
+    }
+
+    public function getTransferencia()
+    {
+        return $this->transferencia;
+    }
+
+    public function setTransferencia($transferencia): void
+    {
+        $this->transferencia = $transferencia;
+    }
+
+    public function getId()
     {
         return $this->id;
     }
 
-
-    public function getFechaRealizada(): \DateTime
+    public function getFechaVenta()
     {
-        return $this->fecha_Creada;
+        return $this->fecha_venta;
     }
 
-
-    public function isTranferencia(): bool
+    public function getTotal()
     {
-        return $this->tranferencia;
+        return $this->total;
     }
 
-
-    public function setTranferencia(bool $tranferencia): void
+    public function setTotal($total): void
     {
-        $this->tranferencia = $tranferencia;
-    }
-
-
-    public function getProductos(): Collection
-    {
-        return $this->productos;
-    }
-
-
-    public function setProductos(Collection $productos): void
-    {
-        $this->productos = $productos;
-    }
-
-
-    public function getImporteTotal(): float
-    {
-        return $this->importeTotal;
-    }
-
-
-    public function setImporteTotal(float $importeTotal): void
-    {
-        $this->importeTotal = $importeTotal;
-    }
-
-
-    public function getUpdated(): \DateTime
-    {
-        return $this->updated;
-    }
-
-
-    public function markAsUpdated(): \DateTime
-    {
-       return $this->updated = new \DateTime('now');
+        $this->total = $total;
     }
 
 

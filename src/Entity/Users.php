@@ -4,13 +4,15 @@
 namespace App\Entity;
 
 
+use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Uid\Uuid;
+
 
 /**
  * @method string getUserIdentifier()
  */
-class Users implements UserInterface
+class Users implements UserInterface,PasswordAuthenticatedUserInterface
 {
     private string $id;
 
@@ -20,20 +22,32 @@ class Users implements UserInterface
 
     private string $name;
 
+    private bool $isAdmin;
+
     private \DateTime $created_on;
 
     private \DateTime $update_on;
 
-    public function __construct(string $nickname,string $password,string $name)
+    public function __construct(string $nickname,string $name, bool $isAdmin=false)
     {
         $this->id=Uuid::v4()->toRfc4122();
         $this->nickname=$nickname;
-        $this->password=$password;
         $this->name=$name;
+        $this->isAdmin=$isAdmin;
         $this->created_on = new \DateTime('now');
         $this->markAsUpdated();
     }
 
+
+    public function getIsAdmin(): bool
+    {
+        return $this->isAdmin;
+    }
+
+    public function setIsAdmin(bool $isAdmin): void
+    {
+        $this->isAdmin = $isAdmin;
+    }
 
     public function getId(): string
     {
@@ -100,10 +114,13 @@ class Users implements UserInterface
     {
     }
 
-    public function getUsername()
+    public function getUsername():string
     {
-        return $this->nickname;
+        return $this->getName();
     }
+    /**
+     * @method string getUserIdentifier()
+     */
 
     public function __call(string $name, array $arguments):void
     {

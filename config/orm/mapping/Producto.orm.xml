@@ -24,6 +24,8 @@
             <unique-constraint name="U_cod" columns="codigo"/>
         </unique-constraints>
 
+
+
     </entity>
 
 </doctrine-mapping>

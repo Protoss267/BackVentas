@@ -19,11 +19,12 @@ class CrearUsuarioServices
     {
     }
 
-    public function __invoke(string $usuario,string $password, string $name):Users
+    public function __invoke(string $usuario,string $password, string $name,bool $isAdmin):Users
     {
-        $persona=new Users($usuario,$password,$name);
-        $encodedPassword = $this->encodePassword($this->encoder,$persona,$persona->getPassword());
+        $persona=new Users($usuario,$name,$isAdmin);
+        $encodedPassword = $this->encodePassword($this->encoder,$persona,$password);
         $persona->setPassword($encodedPassword);
+        $persona->setIsAdmin($isAdmin);
         $this->userRepository->save($persona);
         return $persona;
     }

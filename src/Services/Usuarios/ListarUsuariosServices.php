@@ -4,6 +4,7 @@
 namespace App\Services\Usuarios;
 
 
+use App\Entity\Users;
 use App\Repository\UserRepository;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
@@ -24,18 +25,20 @@ class ListarUsuariosServices
         foreach ($users as $item)
         {
            $data[]=[
-             'usuario'=>[
+
                  'id'=>$item->getId(),
                  'username'=>$item->getNickname(),
                  'password'=>$item->getPassword(),
                  'name'=>$item->getName(),
-                 'created'=>$item->getCreatedOn()->format(\DateTime::RFC822)
-             ]
+                 'isAdmin'=>$item->getIsAdmin(),
+                 'created'=>$item->getCreatedOn()->format(\DateTime::RFC822),
+                 'updated'=>$item->getUpdateOn()->format(\DateTime::RFC822)
+
            ];
         }
         $respnse->setData([
             'success'=>true,
-            $data
+            'data'=>$data
         ]);
         return $respnse;
     }

@@ -9,14 +9,13 @@ use App\Repository\UserRepository;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
 use Symfony\Component\Security\Core\Exception\UsernameNotFoundException;
+use Symfony\Component\Security\Core\Exception\UserNotFoundException;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\PasswordUpgraderInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\User\UserProviderInterface;
 
-/**
- * @method UserInterface loadUserByIdentifier(string $identifier)
- */
+
 class UserProvider implements UserProviderInterface, PasswordUpgraderInterface
 {
     private UserRepository $userRepository;
@@ -26,13 +25,13 @@ class UserProvider implements UserProviderInterface, PasswordUpgraderInterface
         $this->userRepository=$userRepository;
     }
 
-    public function loadUserByUsername(string $username): UserInterface
+    public function loadUserByIdentifier(string $username): UserInterface
     {
         try {
             return $this->userRepository->findByUserOrFail($username);
         }catch (NotFoundHttpException $exception)
         {
-            throw new UsernameNotFoundException(sprintf('Users with username %s not found',$username));
+            throw new UserNotFoundException(sprintf('Users with username %s not found',$username));
         }
     }
 
@@ -40,7 +39,7 @@ class UserProvider implements UserProviderInterface, PasswordUpgraderInterface
     {
         if (!$user instanceof Users)
             throw new UnsupportedUserException(sprintf('Instance of %s not supported',get_class($user)));
-        return $this->loadUserByUsername($user->getUsername());
+        return $this->loadUserByIdentifier($user->getUsername());
     }
 
     public function upgradePassword(UserInterface $user, string $newHashedPassword): void
@@ -58,5 +57,9 @@ class UserProvider implements UserProviderInterface, PasswordUpgraderInterface
     public function __call(string $name, array $arguments)
     {
         // TODO: Implement @method UserInterface loadUserByIdentifier(string $identifier)
+    }
+
+    public function loadUserByUsername(string $username)
+    {
     }
 }

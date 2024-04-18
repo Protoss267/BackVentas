@@ -6,6 +6,7 @@
         <field name="nickname" type="string" length="255"/>
         <field name="password" type="string" length="255"/>
         <field name="name" type="string" length="255"/>
+        <field name="isAdmin" type="boolean" />
         <field name="created_on" type="datetime"/>
         <field name="update_on" type="datetime"/>
 

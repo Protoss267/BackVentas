@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping">
+    <entity name="App\Entity\Item" table="item">
+        <id name="id" length="36" type="string"/>
+
+        <field name="cantidad" type="integer" />
+
+        <one-to-one field="producto" target-entity="App\Entity\Producto">
+            <join-column name="producto_id" referenced-column-name="id"/>
+        </one-to-one>
+
+    </entity>
+</doctrine-mapping>
